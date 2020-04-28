@@ -1,21 +1,30 @@
 from tkinter import *
 
 root = Tk()
-width = 800 # ancho de la pantalla
-height = 500 # alto de la pantalla
-size = '70' # un tamaño general de letra
+width = 800
+height = 500
 root.resizable (0,0)
 Font = 'Agency FB'
- # se configura el color
 root.title("El dilema del prisionero")
-canvas = Canvas(root, width = width, height = height) # se asigna la pantalla sobre la cual se dibuja
+canvas = Canvas(root, width = width, height = height)
+optionslist = ["Aleatorio", "Confesar", "No Confesar"]
+
+
+def juego(jugador1, jugador2, entry):
+    canvas.delete("all")
+    if (jugador1 == ''):
+        jugador1 = optionslist[0]
+    if (jugador2 == ''):
+        jugador2 = optionslist[0]
+    print("Jugador 1: ", jugador1)
+    print("Jugador 2: ", jugador2)
+    print("entry: ", entry)
 
 
 def inicio():
     jugador1 = StringVar()
     jugador2 = StringVar()
-    numero = IntVar()
-    optionslist = ["Aleatorio", "Confesar", "No Confesar"]
+    numero = IntVar(value = 1)
 
     colorbk = '#28EEAF'  # se configura el color
     canvas.configure(background = colorbk)  # se configura el color de la pantalla
@@ -34,8 +43,11 @@ def inicio():
     options2 = OptionMenu(root, jugador2, *optionslist)
     canvas.create_window(7*width/16, 4*height/8 + 20, window = options, width = width/4)
     canvas.create_window(7*width/16, 5*height/8 + 20, window = options2, width = width/4)
-    entry = Entry(root, textvariable = numero, width = int(width/64), font = (Font, 20))
+    entry = Entry(root, textvariable = numero, width = int(width/64), font = (Font, 20), justify = CENTER)
     canvas.create_window(12*width/16, 6*height/8 + 25, anchor = CENTER, window = entry)
+
+    next = Button(root, text = "Next", width = int(width/100), command = lambda: juego(jugador1.get(), jugador2.get(), entry.get()))
+    canvas.create_window(7*width/8, 7*height/8, window = next)
 
 
 
