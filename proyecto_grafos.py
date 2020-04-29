@@ -11,6 +11,10 @@ root.title("El dilema del prisionero")
 canvas = Canvas(root, width = width, height = height)
 optionslist = ["Aleatorio", "Confesar", "No Confesar"]
 colorbk = '#28EEAF'
+puntos1 = 2
+puntos2 = 2
+var_list1 = []
+# var = StringVar()
 
 # def cpu()
 
@@ -29,37 +33,41 @@ def game(player1, player2, number):
 
 
 def jugador(player1, number):
+    global optionslist
+    optionslist.pop(0)
     canvas.create_text(width/2, height/8, anchor = CENTER, text = 'Prisionero 1', font =(Font , size))
     canvas.create_line(width/8, height/5, 7*width/8, height/5)
     canvas.create_line(width/8, height/16, 7*width/8, height/16)
-    canvas.create_text(5*width/16, height/5, anchor = NW, text = 'Confiesa', font =(Font , size - number))
-    canvas.create_text(width/2, height/5, anchor = NW, text = 'No Confiesa', font =(Font , size - number))
     canvas.create_text(3*width/4, height/5, anchor = NW, text = 'Condena', font =(Font , size - number))
     for i in range(number):
-        var = StringVar()
-        h = height - height/5
-        h_tot = (i+1)*h/(number+h/150) + height/4
-        canvas.create_text(3*width/16, h_tot , anchor = CENTER, text = 'Decisión\t ' + str(i+1), font =(Font , size-2*number))
-        yes = Radiobutton(root , variable = var , value = optionslist[1], bg = colorbk, command = puntaje(var, i, h_tot, number))
-        canvas.create_window(3*width/8, h_tot, window = yes)
-        no = Radiobutton(root , variable = var, value = optionslist[2], bg = colorbk, command = puntaje(var, i, h_tot, number))
-        canvas.create_window(5*width/8, h_tot, window = no)
-        if (i == 0):
-            var = player1
-            if (var == optionslist[1]):
-                yes.select()
-            elif (var == optionslist[2]):
-                no.select()
-            yes.config(state = DISABLED)
-            no.config(state = DISABLED)
+        decision(number, i, player1)
 
-def puntaje(var, i, h_tot, number):
-    puntaje = 2
-    if (var == optionslist[1]):
-        puntaje += 10
-    elif (var == optionslist[2]):
-        puntaje += 20
-    canvas.create_text(13*width/16, h_tot , anchor = CENTER, text = str(puntaje), font =(Font , size-2*number))
+def puntuation(var, h_tot, number):
+    global var_list1
+    global puntos1
+    var_list1.append(var)
+    if (var == optionslist[0]):
+        puntos1 += 10
+    elif (var == optionslist[1]):
+        puntos1 += 20
+    canvas.create_text(27*width/32, h_tot , anchor = CENTER, text = str(puntos1) + ' años', font =(Font , size-2*number))
+
+
+def decision(number, i, player1):
+    var = StringVar()
+    h = height - height/5
+    h_tot = (i+1)*h/(number+h/150) + height/4
+    canvas.create_text(3*width/16, h_tot , anchor = CENTER, text = 'Decisión\t ' + str(i+1) + ': ', font =(Font , size-2*number))
+    options = OptionMenu(root, var, *optionslist)
+    options.config(font=(Font,(18)),bg='white',width=12)
+    canvas.create_window(width/2, h_tot, window = options, width = width/4)
+    if (i == 0):
+        var.set(player1)
+        options.config(state = DISABLED)
+
+    boton = Button(root, text = "->", width = int(width/100), command = lambda: puntuation(var.get(), h_tot, number), font = (Font, 15))
+    canvas.create_window(11*width/16, h_tot, window = boton)
+
 
 def Nodo():
     rg
@@ -71,7 +79,7 @@ def tree():
     rg
 
 def end():
-    rt
+    print(var_list)
 
 def inicio():
     canvas.delete("all")
