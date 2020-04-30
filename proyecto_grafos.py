@@ -5,6 +5,7 @@ root = Tk()
 width = 800
 height = 500
 size = 40
+size2 = 23
 root.resizable (0,0)
 Font = 'Agency FB'
 root.title("El dilema del prisionero")
@@ -13,9 +14,12 @@ optionslist = ["Aleatorio", "Confesar", "No Confesar"]
 colorbk = '#28EEAF'
 puntos1 = 2
 puntos2 = 2
-puntos2_tot = []
 var_list1 = []
 var_list2 = []
+puntos1_list = []
+puntos1_list2 = []
+puntos2_list = []
+puntos2_list2 = []
 
 
 def game(player1, player2, number):
@@ -42,17 +46,16 @@ def game(player1, player2, number):
         else:
             player2 = optionslist[-2]
 
-    # optionslist.pop(0)
     var_list2.append(player2)
     var_list1.append(player1)
     jugador(player1, player2, number)
     back = Button(root, text = "Volver", width = int(width/100), command = lambda: inicio(), font = (Font, 20) )
-    next = Button(root, text = "Siguiente", width = int(width/100), command = lambda: end(), font = (Font, 20))
+    next = Button(root, text = "Siguiente", width = int(width/100), command = lambda: end(number), font = (Font, 20))
     canvas.create_window(6*width/8, 17*height/128, window = next)
     canvas.create_window(2*width/8, 17*height/128, window = back)
 
 def probability(prob):
-    num_aleatory = random.random()
+    num_aleatory = random.uniform(0, 1)
     if (num_aleatory < prob):
         return False
     else:
@@ -87,13 +90,16 @@ def jugador(player1, player2, number):
         decision(number, i, player1, player2)
 
 
-def puntuation(i, var, h_tot, number, player2):
+def puntuation(i, var, h_tot, number, player2, boton):
     global var_list1
     global puntos1
     global puntos2
+    global puntos2_list
+    global puntos1_list
     if (i != 0):
         var_list1.append(var)
     cpu(i, player2, number)
+    print("Var: ", var)
     if (var == optionslist[0] and var_list2[i] == optionslist[1]):
         puntos1 -= 1
         puntos2 += 5
@@ -103,36 +109,45 @@ def puntuation(i, var, h_tot, number, player2):
     elif (var == optionslist[0] and var_list2[i] == optionslist[0]):
         puntos1 += 1
         puntos2 += 1
-    puntos2_tot.append(puntos2)
+
+    puntos2_list.append(puntos2)
+    puntos1_list.append(puntos1)
+
     canvas.create_text(27*width/32, h_tot , anchor = CENTER, text = str(puntos1) + ' año(s)', font =(Font , size-2*number))
 
 def decision(number, i, player1, player2):
     var = StringVar()
     h = height - height/5
     h_tot = (i+1)*h/(number+h/150) + height/4
-    canvas.create_text(3*width/16, h_tot , anchor = CENTER, text = 'Decisión\t ' + str(i+1) + ': ', font =(Font , size-2*number))
+    canvas.create_text(3*width/16, h_tot , anchor = CENTER, text = 'Decisión\t ' + str(i+1) + ': ', font =(Font , size-4*number))
     options = OptionMenu(root, var, *optionslist)
-    options.config(font=(Font,(18)),bg='white',width=12)
+    options.config(font=(Font , size-4*number),bg='white', width=12)
     canvas.create_window(width/2, h_tot, window = options, width = width/4)
     if (i == 0):
         var.set(player1)
         options.config(state = DISABLED)
 
-    boton = Button(root, text = "->", width = int(width/100), command = lambda: puntuation(i, var.get(), h_tot, number, player2), font = (Font, 15))
+    boton = Button(root, text = "->", width = int(width/100), command = lambda: puntuation(i, var.get(), h_tot, number, player2, boton), font = (Font , int(size2 - number)))
     canvas.create_window(11*width/16, h_tot, window = boton)
 
 
-def Nodo():
-    rg
+def Nodo (Nombre,x,y,size):
+    # canvas.create_oval(x-(size/2),y,x+(size/2),y+size)
+    # canvas.create_window(x,y+(size/2),anchor = CENTER,window = Label(root,text = Nombre))
+    # root.update()
 
-def Arista():
-    gr
+def Arista (Nombre,x1,y1,x2,y2):
+    # canvas.create_line(x1,y1,x2,y2)
+    # canvas.create_window(x2+((x1-x2)/2),y2+((y1-y2)/2),anchor = CENTER,window = Label(root,text = Nombre,bg = "white",fg="red"))
+    # canvas.create_oval(x1-5,y1-5,x1+5,y1+5,fill = 'black')
+    # root.update()
 
-def tree():
-    rg
+def Tree (puntos1_list, number):
+    tg
 
-def end():
-    ds
+
+def end(number):
+    canvas.delete("all")
 
 def inicio():
     global var_list1
@@ -144,6 +159,8 @@ def inicio():
     optionslist = ["Aleatorio", "Confesar", "No Confesar"]
     puntos1 = 2
     puntos2 = 2
+    puntos1_list = [2]
+    puntos2_list = [2]
 
 
     canvas.delete("all")
