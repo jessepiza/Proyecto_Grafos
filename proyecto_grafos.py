@@ -87,6 +87,8 @@ def jugador(player1, player2, number):
     canvas.create_line(width/8, height/16, 7*width/8, height/16)
     canvas.create_text(3*width/4, height/5, anchor = NW, text = 'Condena', font =(Font , size - number))
     for i in range(number):
+        if (puntos1 == 0 or puntos2 == 0):
+            break
         decision(number, i, player1, player2)
 
 
@@ -108,6 +110,9 @@ def puntuation(i, var, h_tot, number, player2, boton):
     elif (var == optionslist[0] and var_list2[i] == optionslist[0]):
         puntos1 += 1
         puntos2 += 1
+    elif (var == optionslist[1] and var_list2[i] == optionslist[1]):
+        puntos1 += 0
+        puntos2 += 0
 
     puntos2_list.append(puntos2)
     puntos1_list.append(puntos1)
@@ -144,7 +149,7 @@ def Arista (Nombre,x1,y1,x2,y2):
 def resultados (number):
     canvas.delete("all")
     back = Button(root, text = "Inicio", width = int(width/100), command = lambda: inicio(), font = (Font, 20) )
-    next = Button(root, text = "Siguiente", width = int(width/100), command = lambda: end(number), font = (Font, 20))
+    next = Button(root, text = "Siguiente", width = int(width/100), command = lambda: tree(), font = (Font, 20))
     canvas.create_window(6*width/8, 17*height/128, window = next)
     canvas.create_window(2*width/8, 17*height/128, window = back)
     canvas.create_text(width/2, height/8, anchor = CENTER, text = 'Resultados', font =(Font , size))
@@ -163,14 +168,83 @@ def resultados (number):
         canvas.create_text(21*width/32, h_tot , anchor = CENTER, text = var_list2[i], font =(Font , size-2*number))
         canvas.create_text(14*width/16, h_tot , anchor = CENTER, text = puntos2_list[i], font =(Font , size-2*number), fill = "#891C1C")
 
-def Tree (number):
+def tree():
     canvas.delete("all")
+    canvas.configure(background = colorbk)  # se configura el color de la pantalla
+    canvas.pack()
+    wid1 = width/4
+    wid2 = 3*wid1
+    canvas.create_line(0, height/5, width, height/5)
+    canvas.create_line(0, height/16, width, height/16)
+    back = Button(root, text = "Inicio", width = int(width/100), command = lambda: inicio(), font = (Font, 20) )
+    next = Button(root, text = "Cerrar", width = int(width/100), command = lambda: close_window(), font = (Font, 20))
+    canvas.create_window(6*width/8, 17*height/128, window = next)
+    canvas.create_window(2*width/8, 17*height/128, window = back)
+    canvas.create_text(width/2, height/8, anchor = CENTER, text = 'Resultados', font =(Font , size))
 
 
+    if len(var_list1) < 6:
+        x = width/(4*len(var_list1) + 2)
+        heig = height/(len(var_list1) + 2) + height/5
+        canvas.create_rectangle(wid1 - 50, heig -15,wid1 + 50, heig +15, fill = "white", width = 2)
+        canvas.create_text(wid1, heig, anchor = CENTER,text = 'Prisionero 1', fill = "black",font =(Font , 13,"bold"))
+        canvas.create_rectangle(wid2 - 50, heig -15,wid2 + 50, heig +15, fill = "white", width = 2)
+        canvas.create_text(wid2, heig, anchor = CENTER, text = 'Prisionero 2', font =(Font , 13, "bold"))
+    else:
+        x = width/(2.2*len(var_list1))
+        heig = height/(len(var_list1) + 5) + height/5
+        canvas.create_rectangle(wid1 - 50, heig -15,wid1 + 50, heig +15, fill = "white", width = 2)
+        canvas.create_text(wid1, heig, anchor = CENTER,text = 'Prisionero 1', fill = "black",font =(Font , 13,"bold"))
+        canvas.create_rectangle(wid2 - 50, heig -15,wid2 + 50, heig +15, fill = "white", width = 2)
+        canvas.create_text(wid2, heig, anchor = CENTER, text = 'Prisionero 2', font =(Font , 13, "bold"))
 
+    recursion(wid1, wid2, heig, x)
 
-def end(number):
-    Tree(number)
+def recursion(wid1,wid2, heig, x):
+    global var_list1
+    global var_list2
+    n = len(var_list1)
+    if n !=0:
+        heig1 = heig + 45
+        if var_list1[0] == optionslist[-2]:
+            canvas.create_line(wid1, heig+15, wid1 - x, heig1, width = 2)
+            canvas.create_line(wid1, heig + 15, wid1 + x, heig1, width = 2)
+            canvas.create_oval(wid1 -x -30,heig1 - 15, wid1 -x + 30, heig1+15, fill = "RoyalBlue1", width = 2)
+            canvas.create_oval(wid1 + x -40,heig1 - 15, wid1 +x +40, heig1+15, fill = "white", width = 2)
+            canvas.create_text(wid1 - x, heig1, anchor = CENTER, text = 'Confesar', font =(Font, 10, "bold"))
+            canvas.create_text(wid1 + x, heig1, anchor = CENTER, text = 'No confesar', font =(Font , 10, "bold"))
+            wid1 = wid1 - x
+        else:
+            canvas.create_line(wid1, heig + 15, wid1 - x, heig1, width = 2)
+            canvas.create_line(wid1, heig + 15, wid1 + x, heig1, width = 2)
+            canvas.create_oval(wid1 -x -30,heig1 - 15, wid1 -x + 30, heig1+15, fill = "white", width = 2)
+            canvas.create_oval(wid1 + x -40,heig1 - 15, wid1 +x +40, heig1+15, fill = "firebrick1", width= 2)
+            canvas.create_text(wid1 - x, heig1, anchor = CENTER, text = 'Confesar', font =(Font , 10, "bold"))
+            canvas.create_text(wid1 + x, heig1, anchor = CENTER, text = 'No confesar', font =(Font , 10, "bold"))
+            wid1 = wid1 + x
+        if var_list2[0] == optionslist[-2]:
+            canvas.create_line(wid2, heig + 15, wid2 - x, heig1, width = 2 )
+            canvas.create_line(wid2, heig+ 15, wid2+ x, heig1, width = 2)
+            canvas.create_oval(wid2 -x -30,heig1 - 15, wid2 -x + 30, heig1+15, fill = "RoyalBlue1", width = 2)
+            canvas.create_oval(wid2 + x -40,heig1 - 15, wid2 +x +40, heig1+15, fill = "white", width = 2)
+            canvas.create_text(wid2 - x, heig1, anchor= CENTER, text = 'Confesar', font =(Font , 10, "bold"))
+            canvas.create_text(wid2 + x, heig1, anchor = CENTER,text = 'No confesar', font =(Font , 10, "bold") )
+            wid2 = wid2 - x
+        else:
+            canvas.create_line(wid2, heig +15, wid2 - x, heig1, width = 2)
+            canvas.create_line(wid2, heig + 15, wid2+ x, heig1, width = 2)
+            canvas.create_oval(wid2 -x -30,heig1 - 15, wid2 -x + 30, heig1+15, fill = "white", width = 2)
+            canvas.create_oval(wid2 + x -40,heig1 - 15, wid2 +x +40, heig1+15, fill = "firebrick1", width = 2)
+            canvas.create_text(wid2 - x, heig1, anchor= CENTER, text = 'Confesar', font =(Font , 10, "bold"))
+            canvas.create_text(wid2 + x, heig1, anchor = CENTER,text = 'No confesar', font =(Font , 10, "bold") )
+            wid2 = wid2 + x
+            x = 0.95*x
+        del(var_list1[0])
+        del(var_list2[0])
+        recursion(wid1, wid2, heig1, x)
+
+def close_window():
+    root.destroy()
 
 def inicio():
     global var_list1
