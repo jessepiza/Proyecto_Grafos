@@ -1,5 +1,5 @@
 from tkinter import *
-import time
+import random
 
 root = Tk()
 width = 800
@@ -13,47 +13,100 @@ optionslist = ["Aleatorio", "Confesar", "No Confesar"]
 colorbk = '#28EEAF'
 puntos1 = 2
 puntos2 = 2
+puntos2_tot = []
 var_list1 = []
-# var = StringVar()
+var_list2 = []
 
-# def cpu()
 
 def game(player1, player2, number):
+    global var_list1
+    global var_list2
+
     canvas.delete("all")
     if (player1 == ''):
         player1 = optionslist[0]
     if (player2 == ''):
         player2 = optionslist[0]
 
-    jugador(player1, number)
+    if (player1 == optionslist[0]):
+        bool = probability(0.5)
+        if (bool == False):
+            player1 = optionslist[-1]
+        else:
+            player1 = optionslist[-2]
+
+    if (player2 == optionslist[0]):
+        bool = probability(0.5)
+        if (bool == False):
+            player2 = optionslist[-1]
+        else:
+            player2 = optionslist[-2]
+
+    # optionslist.pop(0)
+    var_list2.append(player2)
+    var_list1.append(player1)
+    jugador(player1, player2, number)
     back = Button(root, text = "Volver", width = int(width/100), command = lambda: inicio(), font = (Font, 20) )
     next = Button(root, text = "Siguiente", width = int(width/100), command = lambda: end(), font = (Font, 20))
     canvas.create_window(6*width/8, 17*height/128, window = next)
     canvas.create_window(2*width/8, 17*height/128, window = back)
 
+def probability(prob):
+    num_aleatory = random.random()
+    if (num_aleatory < prob):
+        return False
+    else:
+        return True
 
-def jugador(player1, number):
+def cpu(i, player2, number):
+    global var_list2
+    global var_list1
+    if (i < number-1):
+        if (var_list2[i] == var_list1[i]):
+            prob = 0.5
+        elif (var_list2[i] == optionslist[-1] and var_list1[i] == optionslist[-2]):
+            prob = 0.2
+        else:
+            prob = 0.4
+        bool =probability(prob)
+        if (bool == False):
+            var_list2.append(optionslist[1])
+        else:
+            var_list2.append(optionslist[0])
+
+
+def jugador(player1, player2, number):
     global optionslist
-    optionslist.pop(0)
+    if (len(optionslist) == 3):
+        optionslist.pop(0)
     canvas.create_text(width/2, height/8, anchor = CENTER, text = 'Prisionero 1', font =(Font , size))
     canvas.create_line(width/8, height/5, 7*width/8, height/5)
     canvas.create_line(width/8, height/16, 7*width/8, height/16)
     canvas.create_text(3*width/4, height/5, anchor = NW, text = 'Condena', font =(Font , size - number))
     for i in range(number):
-        decision(number, i, player1)
+        decision(number, i, player1, player2)
 
-def puntuation(var, h_tot, number):
+
+def puntuation(i, var, h_tot, number, player2):
     global var_list1
     global puntos1
-    var_list1.append(var)
-    if (var == optionslist[0]):
-        puntos1 += 10
-    elif (var == optionslist[1]):
-        puntos1 += 20
-    canvas.create_text(27*width/32, h_tot , anchor = CENTER, text = str(puntos1) + ' años', font =(Font , size-2*number))
+    global puntos2
+    if (i != 0):
+        var_list1.append(var)
+    cpu(i, player2, number)
+    if (var == optionslist[0] and var_list2[i] == optionslist[1]):
+        puntos1 -= 1
+        puntos2 += 5
+    elif (var == optionslist[1] and var_list2[i] == optionslist[0]):
+        puntos1 += 5
+        puntos2 -= 1
+    elif (var == optionslist[0] and var_list2[i] == optionslist[0]):
+        puntos1 += 1
+        puntos2 += 1
+    puntos2_tot.append(puntos2)
+    canvas.create_text(27*width/32, h_tot , anchor = CENTER, text = str(puntos1) + ' año(s)', font =(Font , size-2*number))
 
-
-def decision(number, i, player1):
+def decision(number, i, player1, player2):
     var = StringVar()
     h = height - height/5
     h_tot = (i+1)*h/(number+h/150) + height/4
@@ -65,7 +118,7 @@ def decision(number, i, player1):
         var.set(player1)
         options.config(state = DISABLED)
 
-    boton = Button(root, text = "->", width = int(width/100), command = lambda: puntuation(var.get(), h_tot, number), font = (Font, 15))
+    boton = Button(root, text = "->", width = int(width/100), command = lambda: puntuation(i, var.get(), h_tot, number, player2), font = (Font, 15))
     canvas.create_window(11*width/16, h_tot, window = boton)
 
 
@@ -79,9 +132,20 @@ def tree():
     rg
 
 def end():
-    print(var_list)
+    ds
 
 def inicio():
+    global var_list1
+    global var_list2
+    global puntos1
+    global puntos2
+    var_list1 = []
+    var_list2 = []
+    optionslist = ["Aleatorio", "Confesar", "No Confesar"]
+    puntos1 = 2
+    puntos2 = 2
+
+
     canvas.delete("all")
     player1 = StringVar()
     player2 = StringVar()
