@@ -50,7 +50,7 @@ def game(player1, player2, number):
     var_list1.append(player1)
     jugador(player1, player2, number)
     back = Button(root, text = "Volver", width = int(width/100), command = lambda: inicio(), font = (Font, 20) )
-    next = Button(root, text = "Siguiente", width = int(width/100), command = lambda: end(number), font = (Font, 20))
+    next = Button(root, text = "Siguiente", width = int(width/100), command = lambda: resultados(number), font = (Font, 20))
     canvas.create_window(6*width/8, 17*height/128, window = next)
     canvas.create_window(2*width/8, 17*height/128, window = back)
 
@@ -99,7 +99,6 @@ def puntuation(i, var, h_tot, number, player2, boton):
     if (i != 0):
         var_list1.append(var)
     cpu(i, player2, number)
-    print("Var: ", var)
     if (var == optionslist[0] and var_list2[i] == optionslist[1]):
         puntos1 -= 1
         puntos2 += 5
@@ -119,7 +118,7 @@ def decision(number, i, player1, player2):
     var = StringVar()
     h = height - height/5
     h_tot = (i+1)*h/(number+h/150) + height/4
-    canvas.create_text(3*width/16, h_tot , anchor = CENTER, text = 'Decisión\t ' + str(i+1) + ': ', font =(Font , size-4*number))
+    canvas.create_text(3*width/16, h_tot , anchor = CENTER, text = 'Decisión\t ' + str(i+1) + ': ', font =(Font , size-2*number))
     options = OptionMenu(root, var, *optionslist)
     options.config(font=(Font , size-4*number),bg='white', width=12)
     canvas.create_window(width/2, h_tot, window = options, width = width/4)
@@ -132,22 +131,46 @@ def decision(number, i, player1, player2):
 
 
 def Nodo (Nombre,x,y,size):
-    # canvas.create_oval(x-(size/2),y,x+(size/2),y+size)
-    # canvas.create_window(x,y+(size/2),anchor = CENTER,window = Label(root,text = Nombre))
-    # root.update()
+    canvas.create_oval(x-(size/2),y,x+(size/2),y+size)
+    canvas.create_window(x,y+(size/2),anchor = CENTER,window = Label(root,text = Nombre))
+    root.update()
 
 def Arista (Nombre,x1,y1,x2,y2):
-    # canvas.create_line(x1,y1,x2,y2)
-    # canvas.create_window(x2+((x1-x2)/2),y2+((y1-y2)/2),anchor = CENTER,window = Label(root,text = Nombre,bg = "white",fg="red"))
-    # canvas.create_oval(x1-5,y1-5,x1+5,y1+5,fill = 'black')
-    # root.update()
+    canvas.create_line(x1,y1,x2,y2)
+    canvas.create_window(x2+((x1-x2)/2),y2+((y1-y2)/2),anchor = CENTER,window = Label(root,text = Nombre,bg = "white",fg="red"))
+    canvas.create_oval(x1-5,y1-5,x1+5,y1+5,fill = 'black')
+    root.update()
 
-def Tree (puntos1_list, number):
-    tg
+def resultados (number):
+    canvas.delete("all")
+    back = Button(root, text = "Inicio", width = int(width/100), command = lambda: inicio(), font = (Font, 20) )
+    next = Button(root, text = "Siguiente", width = int(width/100), command = lambda: end(number), font = (Font, 20))
+    canvas.create_window(6*width/8, 17*height/128, window = next)
+    canvas.create_window(2*width/8, 17*height/128, window = back)
+    canvas.create_text(width/2, height/8, anchor = CENTER, text = 'Resultados', font =(Font , size))
+    canvas.create_line(0, height/5, width, height/5)
+    canvas.create_line(0, height/16, width, height/16)
+    canvas.create_line(width/2, height/5, width/2, height)
+    canvas.create_text(width/32, height/5, anchor = NW, text = 'Prisionero 1', font =(Font , size - number))
+    canvas.create_text(5*width/16, height/5, anchor = NW, text = 'Condena', font =(Font , size - number), fill = "#891C1C")
+    canvas.create_text(17*width/32, height/5, anchor = NW, text = 'Prisionero 2', font =(Font , size - number))
+    canvas.create_text(13*width/16, height/5, anchor = NW, text = 'Condena', font =(Font , size - number), fill = "#891C1C")
+    for i in range (number):
+        h = height - height/5
+        h_tot = (i+1)*h/(number+h/150) + height/4
+        canvas.create_text(5*width/32, h_tot , anchor = CENTER, text = var_list1[i], font =(Font , size-2*number))
+        canvas.create_text(6*width/16, h_tot , anchor = CENTER, text = puntos1_list[i], font =(Font , size-2*number), fill = "#891C1C")
+        canvas.create_text(21*width/32, h_tot , anchor = CENTER, text = var_list2[i], font =(Font , size-2*number))
+        canvas.create_text(14*width/16, h_tot , anchor = CENTER, text = puntos2_list[i], font =(Font , size-2*number), fill = "#891C1C")
+
+def Tree (number):
+    canvas.delete("all")
+
+
 
 
 def end(number):
-    canvas.delete("all")
+    Tree(number)
 
 def inicio():
     global var_list1
