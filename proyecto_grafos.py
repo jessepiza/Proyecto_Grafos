@@ -242,12 +242,12 @@ def recursion(wid1,wid2, heig, x):
             wid2 = wid2 + x
             x = 0.95*x
 
-        canvas.create_rectangle(wid2 - x/2 -30, (heig+15 + heig1)/2 - 10, wid2 -x/2 +30, (heig+15 + heig1)/2 + 10, fill = colorbk, outline = colorbk)
-        canvas.create_rectangle(wid2 + x/2 -30, (heig+15 + heig1)/2 - 10, wid2 + x/2 +30, (heig+15 + heig1)/2 + 10, fill = colorbk, outline = colorbk)
-        canvas.create_text((2*wid2 - x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-1], font =(Font , 10, negrita))
-        canvas.create_text((2*wid2 + x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-2], font =(Font , 10, negrita))
+        canvas.create_rectangle(wid1 - x/2 -30, (heig+15 + heig1)/2 - 10, wid1 -x/2 +30, (heig+15 + heig1)/2 + 10, fill = colorbk, outline = colorb)
+        canvas.create_rectangle(wid1 + x/2 -30, (heig+15 + heig1)/2 - 10, wid1 + x/2 +30, (heig+15 + heig1)/2 + 10, fill = colorbk, outline = colorbk)
         canvas.create_rectangle(wid2 - x/2 -30, (heig+15 + heig1)/2 -10, wid2 -x/2 +30, (heig+15 + heig1)/2 + 10, fill = colorbk, outline = colorbk)
         canvas.create_rectangle(wid2 + x/2 -30, heig + 17.5, wid2 + x/2 +30, heig + 30, fill = colorbk, outline = colorbk)
+        canvas.create_text((2*wid1 - x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-1], font =(Font , 10, negrita))
+        canvas.create_text((2*wid1 + x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-2], font =(Font , 10, negrita))
         canvas.create_text((2*wid2 - x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-1], font =(Font , 10, negrita))
         canvas.create_text((2*wid2 + x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-2], font =(Font , 10, negrita))
 
