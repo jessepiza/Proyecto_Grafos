@@ -3,7 +3,7 @@ import random
 
 root = Tk()
 width = 800
-height = 500
+height = 600
 size = 40
 size2 = 23
 root.resizable (0,0)
@@ -25,14 +25,16 @@ puntos2_list2 = []
 def game(player1, player2, number):
     global var_list1
     global var_list2
-
+    print(player1)
     canvas.delete("all")
     if (player1 == ''):
+        print("bla")
         player1 = optionslist[0]
     if (player2 == ''):
         player2 = optionslist[0]
 
     if (player1 == optionslist[0]):
+        print("entro")
         bool = probability(0.5)
         if (bool == False):
             player1 = optionslist[-1]
@@ -202,10 +204,10 @@ def recursion(wid1,wid2, heig, x):
         if (bool):
             canvas.create_line(wid1, heig + 15, wid1 - x, heig1, width = 2)
             canvas.create_line(wid1, heig + 15, wid1 + x, heig1, width = 2)
-            canvas.create_rectangle(wid1 - x/2 -30, (heig+15 + heig1)/2 - 10, wid1 -x/2 +30, (heig+15 + heig1)/2 + 10, fill = colorbk, outline = colorbk)
-            canvas.create_rectangle(wid1 + x/2 -30, (heig+15 + heig1)/2 - 10, wid1 + x/2 +30, (heig+15 + heig1)/2 + 10, fill = colorbk, outline = colorbk)
-            canvas.create_text((2*wid1 - x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-2], font =(Font , 10, negrita))
-            canvas.create_text((2*wid1 + x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-1], font =(Font , 10, negrita))
+            canvas.create_rectangle(wid1 - x/2 -10, (heig+15 + heig1)/2 - 10, wid1 -x/2 +10, (heig+15 + heig1)/2 + 10, fill = colorbk, outline = colorbk)
+            canvas.create_rectangle(wid1 + x/2 -10, (heig+15 + heig1)/2 - 10, wid1 + x/2 +10, (heig+15 + heig1)/2 + 10, fill = colorbk, outline = colorbk)
+            canvas.create_text((2*wid1 - x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = "Sí", font = (Font , 10, negrita))
+            canvas.create_text((2*wid1 + x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = "No", font = (Font , 10, negrita))
             if var_list1[0] == optionslist[-2]:
                 canvas.create_oval(wid1 -x -15,heig1 - 15, wid1 -x + 15, heig1+15, fill = check, width = 2)
                 canvas.create_oval(wid1 + x -15,heig1 - 15, wid1 +x +15, heig1+15, fill = colorbk, width = 2)
@@ -222,10 +224,10 @@ def recursion(wid1,wid2, heig, x):
         if(bool == False):
             canvas.create_line(wid2, heig + 15, wid2 - x, heig1, width = 2 )
             canvas.create_line(wid2, heig+ 15, wid2+ x, heig1, width = 2)
-            canvas.create_rectangle(wid2 - x/2 -30, (heig+15 + heig1)/2 -10, wid2 -x/2 +30, (heig+15 + heig1)/2 + 10, fill = colorbk, outline = colorbk)
-            canvas.create_rectangle(wid2 + x/2 -30, (heig+15 + heig1)/2 -10, wid2 + x/2 +30, (heig+15 + heig1)/2 + 10, fill = colorbk, outline = colorbk)
-            canvas.create_text((2*wid2 - x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-2], font =(Font , 10, negrita))
-            canvas.create_text((2*wid2 + x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-1], font =(Font , 10, negrita))
+            canvas.create_rectangle(wid2 - x/2 -10, (heig+15 + heig1)/2 -10, wid2 -x/2 +10, (heig+15 + heig1)/2 + 10, fill = colorbk, outline = colorbk)
+            canvas.create_rectangle(wid2 + x/2 -10, (heig+15 + heig1)/2 -10, wid2 + x/2 +10, (heig+15 + heig1)/2 + 10, fill = colorbk, outline = colorbk)
+            canvas.create_text((2*wid2 - x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = "Sí", font =(Font , 10, negrita))
+            canvas.create_text((2*wid2 + x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = "No", font =(Font , 10, negrita))
             if var_list2[0] == optionslist[-2]:
                 canvas.create_oval(wid2 -x -15,heig1 - 15, wid2 -x + 15, heig1+15, fill = check, width = 2)
                 canvas.create_oval(wid2 + x -15,heig1 - 15, wid2 +x +15, heig1+15, fill = colorbk, width = 2)
@@ -265,7 +267,6 @@ def inicio():
     puntos1_list = [2]
     puntos2_list = [2]
 
-
     canvas.delete("all")
     player1 = StringVar()
     player2 = StringVar()
@@ -290,6 +291,7 @@ def inicio():
     canvas.create_window(7*width/16, 5*height/8 + 20, window = options2, width = width/4)
     entry = Entry(root, textvariable = number, width = int(width/128), font = (Font, 20), justify = CENTER)
     canvas.create_window(11*width/16, 6*height/8 + 25, anchor = CENTER, window = entry)
+    print(player1.get())
 
     next = Button(root, text = "Siguiente", width = int(width/100), command = lambda: game(player1.get(), player2.get(), number.get()), font = (Font, 20))
     canvas.create_window(7*width/8, 7*height/8, window = next)
