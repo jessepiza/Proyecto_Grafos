@@ -245,6 +245,14 @@ def recursion(wid1,wid2, heig, x):
             canvas.create_text(wid2 + x, heig1, anchor = CENTER,text = str(puntos2_list[0]), font =(Font , 15) )
             wid2 = wid2 + x
             x = 0.95*x
+        canvas.create_rectangle(wid1 - x/2 -30, heig + 17.5, wid1 -x/2 +30, heig + 30, fill = colorbk, outline = colorbk)
+        canvas.create_text(wid1 - x/2, heig + 25, anchor = CENTER, text = 'Confesar', font =(Font, 10, "bold"))
+        canvas.create_rectangle(wid1 + x/2 -30, heig + 17.5, wid1 + x/2 +30, heig + 30, fill = colorbk, outline = colorbk)
+        canvas.create_text(wid1 + x/2, heig + 25, anchor = CENTER, text = 'No confesar', font =(Font , 10, "bold"))
+        canvas.create_rectangle(wid2 - x/2 -30, heig + 17.5, wid2 -x/2 +30, heig + 30, fill = colorbk, outline = colorbk)
+        canvas.create_rectangle(wid2 + x/2 -30, heig + 17.5, wid2 + x/2 +30, heig + 30, fill = colorbk, outline = colorbk)
+        canvas.create_text(wid2 - x, heig + 25, anchor= CENTER, text = 'Confesar', font =(Font , 10, "bold"))
+        canvas.create_text(wid2 + x, heig +25, anchor = CENTER,text = 'No confesar', font =(Font , 10, "bold") )
         del(var_list1[0])
         del(var_list2[0])
         del(puntos2_list[0])
