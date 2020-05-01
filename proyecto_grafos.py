@@ -200,6 +200,14 @@ def recursion(wid1,wid2, heig, x):
     negrita = "bold"
     if n !=0:
         heig1 = heig + 45
+        canvas.create_rectangle(wid1 - x/2 -30, (heig+15 + heig1)/2 - 10, wid1 -x/2 +30, (heig+15 + heig1)/2 + 10, fill = colorbk, outline = colorbk)
+        canvas.create_rectangle(wid1 + x/2 -30, (heig+15 + heig1)/2 - 10, wid1 + x/2 +30, (heig+15 + heig1)/2 + 10, fill = colorbk, outline = colorbk)
+        canvas.create_rectangle(wid2 - x/2 -30, (heig+15 + heig1)/2 -10, wid2 -x/2 +30, (heig+15 + heig1)/2 + 10, fill = colorbk, outline = colorbk)
+        canvas.create_rectangle(wid2 + x/2 -30, heig + 17.5, wid2 + x/2 +30, heig + 30, fill = colorbk, outline = colorbk)
+        canvas.create_text((2*wid1 - x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-1], font =(Font , 10, negrita))
+        canvas.create_text((2*wid1 + x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-2], font =(Font , 10, negrita))
+        canvas.create_text((2*wid2 - x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-1], font =(Font , 10, negrita))
+        canvas.create_text((2*wid2 + x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-2], font =(Font , 10, negrita))
         if var_list1[0] == optionslist[-2]:
             canvas.create_line(wid1, heig+15, wid1 - x, heig1, width = 2)
             canvas.create_line(wid1, heig + 15, wid1 + x, heig1, width = 2)
@@ -242,14 +250,6 @@ def recursion(wid1,wid2, heig, x):
             wid2 = wid2 + x
             x = 0.95*x
 
-        canvas.create_rectangle(wid1 - x/2 -30, (heig+15 + heig1)/2 - 10, wid1 -x/2 +30, (heig+15 + heig1)/2 + 10, fill = colorbk, outline = colorb)
-        canvas.create_rectangle(wid1 + x/2 -30, (heig+15 + heig1)/2 - 10, wid1 + x/2 +30, (heig+15 + heig1)/2 + 10, fill = colorbk, outline = colorbk)
-        canvas.create_rectangle(wid2 - x/2 -30, (heig+15 + heig1)/2 -10, wid2 -x/2 +30, (heig+15 + heig1)/2 + 10, fill = colorbk, outline = colorbk)
-        canvas.create_rectangle(wid2 + x/2 -30, heig + 17.5, wid2 + x/2 +30, heig + 30, fill = colorbk, outline = colorbk)
-        canvas.create_text((2*wid1 - x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-1], font =(Font , 10, negrita))
-        canvas.create_text((2*wid1 + x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-2], font =(Font , 10, negrita))
-        canvas.create_text((2*wid2 - x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-1], font =(Font , 10, negrita))
-        canvas.create_text((2*wid2 + x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-2], font =(Font , 10, negrita))
 
         del(var_list1[0])
         del(var_list2[0])
