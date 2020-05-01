@@ -208,15 +208,17 @@ def recursion(wid1,wid2, heig, x):
 
             canvas.create_oval(wid1 -x -15,heig1 - 15, wid1 -x + 15, heig1+15, fill = check, width = 2)
             canvas.create_oval(wid1 + x -15,heig1 - 15, wid1 +x +15, heig1+15, fill = colorbk, width = 2)
+
+            canvas.create_rectangle(wid1 - x/2 -30, heig + 17.5, wid1 -x/2 +30, heig + 30, fill = colorbk, outline = colorbk)
+            canvas.create_text(wid1 - x/2, heig + 25, anchor = CENTER, text = 'Confesar', font =(Font, 10, "bold"))
+            canvas.create_rectangle(wid1 + x/2 -30, heig + 17.5, wid1 + x/2 +30, heig + 30, fill = colorbk, outline = colorbk)
+            canvas.create_text(wid1 + x/2, heig + 25, anchor = CENTER, text = 'No confesar', font =(Font , 10, "bold"))
             canvas.create_text(wid1 - x, heig1, anchor = CENTER, text = str(puntos1_list[0]), font =(Font, 15))
             canvas.create_text(wid1 + x, heig1, anchor = CENTER, text = str(puntos1_list2[0]), font =(Font , 15))
             wid1 = wid1 - x
         else:
             canvas.create_line(wid1, heig + 15, wid1 - x, heig1, width = 2)
             canvas.create_line(wid1, heig + 15, wid1 + x, heig1, width = 2)
-            canvas.create_text((2*wid1 - x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-1], font =(Font , 10, negrita))
-            canvas.create_text((2*wid1 + x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-2], font =(Font , 10, negrita))
-
             canvas.create_oval(wid1 -x -15,heig1 - 15, wid1 -x + 15, heig1+15, fill = colorbk, width = 2)
             canvas.create_oval(wid1 + x -15,heig1 - 15, wid1 +x +15, heig1+15, fill = check, width= 2)
             canvas.create_text(wid1 - x, heig1, anchor = CENTER, text = str(puntos1_list2[0]), font =(Font , 15))
@@ -225,9 +227,6 @@ def recursion(wid1,wid2, heig, x):
         if var_list2[0] == optionslist[-2]:
             canvas.create_line(wid2, heig + 15, wid2 - x, heig1, width = 2 )
             canvas.create_line(wid2, heig+ 15, wid2+ x, heig1, width = 2)
-            canvas.create_text((2*wid2 - x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-1], font =(Font , 10, negrita))
-            canvas.create_text((2*wid2 + x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-2], font =(Font , 10, negrita))
-
             canvas.create_oval(wid2 -x -15,heig1 - 15, wid2 -x + 15, heig1+15, fill = check, width = 2)
             canvas.create_oval(wid2 + x -15,heig1 - 15, wid2 +x +15, heig1+15, fill = colorbk, width = 2)
             canvas.create_text(wid2 - x, heig1, anchor= CENTER, text = str(puntos2_list[0]), font =(Font , 15))
@@ -236,23 +235,22 @@ def recursion(wid1,wid2, heig, x):
         else:
             canvas.create_line(wid2, heig +15, wid2 - x, heig1, width = 2)
             canvas.create_line(wid2, heig + 15, wid2+ x, heig1, width = 2)
-            canvas.create_text((2*wid2 - x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-1], font =(Font , 10, negrita))
-            canvas.create_text((2*wid2 + x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-2], font =(Font , 10, negrita))
-
             canvas.create_oval(wid2 -x -15,heig1 - 15, wid2 -x + 15, heig1+15, fill = colorbk, width = 2)
             canvas.create_oval(wid2 + x -15,heig1 - 15, wid2 +x +15, heig1+15, fill = check, width = 2)
             canvas.create_text(wid2 - x, heig1, anchor= CENTER, text = str(puntos2_list2[0]), font =(Font , 15))
             canvas.create_text(wid2 + x, heig1, anchor = CENTER,text = str(puntos2_list[0]), font =(Font , 15) )
             wid2 = wid2 + x
             x = 0.95*x
-        canvas.create_rectangle(wid1 - x/2 -30, heig + 17.5, wid1 -x/2 +30, heig + 30, fill = colorbk, outline = colorbk)
-        canvas.create_text(wid1 - x/2, heig + 25, anchor = CENTER, text = 'Confesar', font =(Font, 10, "bold"))
-        canvas.create_rectangle(wid1 + x/2 -30, heig + 17.5, wid1 + x/2 +30, heig + 30, fill = colorbk, outline = colorbk)
-        canvas.create_text(wid1 + x/2, heig + 25, anchor = CENTER, text = 'No confesar', font =(Font , 10, "bold"))
-        canvas.create_rectangle(wid2 - x/2 -30, heig + 17.5, wid2 -x/2 +30, heig + 30, fill = colorbk, outline = colorbk)
+
+        canvas.create_rectangle(wid2 - x/2 -30, (heig+15 + heig1)/2 - 10, wid2 -x/2 +30, (heig+15 + heig1)/2 + 10, fill = colorbk, outline = colorbk)
+        canvas.create_rectangle(wid2 + x/2 -30, (heig+15 + heig1)/2 - 10, wid2 + x/2 +30, (heig+15 + heig1)/2 + 10, fill = colorbk, outline = colorbk)
+        canvas.create_text((2*wid2 - x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-1], font =(Font , 10, negrita))
+        canvas.create_text((2*wid2 + x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-2], font =(Font , 10, negrita))
+        canvas.create_rectangle(wid2 - x/2 -30, (heig+15 + heig1)/2 -10, wid2 -x/2 +30, (heig+15 + heig1)/2 + 10, fill = colorbk, outline = colorbk)
         canvas.create_rectangle(wid2 + x/2 -30, heig + 17.5, wid2 + x/2 +30, heig + 30, fill = colorbk, outline = colorbk)
-        canvas.create_text(wid2 - x, heig + 25, anchor= CENTER, text = 'Confesar', font =(Font , 10, "bold"))
-        canvas.create_text(wid2 + x, heig +25, anchor = CENTER,text = 'No confesar', font =(Font , 10, "bold") )
+        canvas.create_text((2*wid2 - x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-1], font =(Font , 10, negrita))
+        canvas.create_text((2*wid2 + x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-2], font =(Font , 10, negrita))
+
         del(var_list1[0])
         del(var_list2[0])
         del(puntos2_list[0])
