@@ -25,16 +25,13 @@ puntos2_list2 = []
 def game(player1, player2, number):
     global var_list1
     global var_list2
-    print(player1)
     canvas.delete("all")
     if (player1 == ''):
-        print("bla")
         player1 = optionslist[0]
     if (player2 == ''):
         player2 = optionslist[0]
 
     if (player1 == optionslist[0]):
-        print("entro")
         bool = probability(0.5)
         if (bool == False):
             player1 = optionslist[-1]
@@ -291,7 +288,6 @@ def inicio():
     canvas.create_window(7*width/16, 5*height/8 + 20, window = options2, width = width/4)
     entry = Entry(root, textvariable = number, width = int(width/128), font = (Font, 20), justify = CENTER)
     canvas.create_window(11*width/16, 6*height/8 + 25, anchor = CENTER, window = entry)
-    print(player1.get())
 
     next = Button(root, text = "Siguiente", width = int(width/100), command = lambda: game(player1.get(), player2.get(), number.get()), font = (Font, 20))
     canvas.create_window(7*width/8, 7*height/8, window = next)
