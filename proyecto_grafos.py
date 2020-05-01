@@ -93,26 +93,29 @@ def jugador(player1, player2, number):
 
 
 def puntuation(i, var, h_tot, number, player2, boton):
-    global var_list1
-    global puntos1
-    global puntos2
-    global puntos2_list
-    global puntos1_list
+    global var_list1, puntos1, puntos2, puntos2_list, puntos1_list
     if (i != 0):
         var_list1.append(var)
     cpu(i, player2, number)
     if (var == optionslist[0] and var_list2[i] == optionslist[1]):
         puntos1 -= 1
         puntos2 += 5
+        puntos1_list2.append(puntos1 + 1)
+        puntos2_list2.append(puntos2 - 4)
     elif (var == optionslist[1] and var_list2[i] == optionslist[0]):
         puntos1 += 5
         puntos2 -= 1
+        puntos1_list2.append(puntos1 - 4)
+        puntos2_list2.append(puntos2 + 1)
     elif (var == optionslist[0] and var_list2[i] == optionslist[0]):
+        print(puntos1, puntos2)
         puntos1 += 1
         puntos2 += 1
+        puntos1_list2.append(puntos1 + 4)
+        puntos2_list2.append(puntos2 + 4)
     elif (var == optionslist[1] and var_list2[i] == optionslist[1]):
-        puntos1 += 0
-        puntos2 += 0
+        puntos1_list2.append(puntos1 - 1)
+        puntos2_list2.append(puntos2 - 1)
 
     puntos2_list.append(puntos2)
     puntos1_list.append(puntos1)
@@ -136,10 +139,6 @@ def decision(number, i, player1, player2):
 
 
 def resultados (number):
-    list1 = var_list1.copy()
-    list2 = var_list2.copy()
-    puntos1 = puntos1_list.copy()
-    puntos2 = puntos2_list.copy()
     canvas.delete("all")
     back = Button(root, text = "Inicio", width = int(width/100), command = lambda: inicio(), font = (Font, 20) )
     next = Button(root, text = "Siguiente", width = int(width/100), command = lambda: tree(), font = (Font, 20))
@@ -195,12 +194,7 @@ def tree():
 
 
 def recursion(wid1,wid2, heig, x):
-    global var_list1
-    global var_list2
-    global puntos1_list
-    global puntos2_list
-    global puntos1_list2
-    global puntos2_list2
+    global var_list1, var_list2, puntos1_list, puntos2_list, puntos1_list2, puntos2_list2
     n = len(var_list1)
     check = "#33E3E0"
     negrita = "bold"
@@ -209,13 +203,13 @@ def recursion(wid1,wid2, heig, x):
         if var_list1[0] == optionslist[-2]:
             canvas.create_line(wid1, heig+15, wid1 - x, heig1, width = 2)
             canvas.create_line(wid1, heig + 15, wid1 + x, heig1, width = 2)
-            canvas.create_text((2*wid1 - x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-1], font =(Font , 10, negrita))
-            canvas.create_text((2*wid1 + x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-2], font =(Font , 10, negrita))
+            canvas.create_text((2*wid1 - x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-2], font =(Font , 10, negrita))
+            canvas.create_text((2*wid1 + x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = optionslist[-1], font =(Font , 10, negrita))
 
             canvas.create_oval(wid1 -x -15,heig1 - 15, wid1 -x + 15, heig1+15, fill = check, width = 2)
             canvas.create_oval(wid1 + x -15,heig1 - 15, wid1 +x +15, heig1+15, fill = colorbk, width = 2)
             canvas.create_text(wid1 - x, heig1, anchor = CENTER, text = str(puntos1_list[0]), font =(Font, 15))
-            canvas.create_text(wid1 + x, heig1, anchor = CENTER, text = 'No confesar', font =(Font , 15))
+            canvas.create_text(wid1 + x, heig1, anchor = CENTER, text = str(puntos1_list2[0]), font =(Font , 15))
             wid1 = wid1 - x
         else:
             canvas.create_line(wid1, heig + 15, wid1 - x, heig1, width = 2)
@@ -225,7 +219,7 @@ def recursion(wid1,wid2, heig, x):
 
             canvas.create_oval(wid1 -x -15,heig1 - 15, wid1 -x + 15, heig1+15, fill = colorbk, width = 2)
             canvas.create_oval(wid1 + x -15,heig1 - 15, wid1 +x +15, heig1+15, fill = check, width= 2)
-            canvas.create_text(wid1 - x, heig1, anchor = CENTER, text = 'Confesar', font =(Font , 15))
+            canvas.create_text(wid1 - x, heig1, anchor = CENTER, text = str(puntos1_list2[0]), font =(Font , 15))
             canvas.create_text(wid1 + x, heig1, anchor = CENTER, text = str(puntos1_list[0]), font =(Font , 15))
             wid1 = wid1 + x
         if var_list2[0] == optionslist[-2]:
@@ -237,7 +231,7 @@ def recursion(wid1,wid2, heig, x):
             canvas.create_oval(wid2 -x -15,heig1 - 15, wid2 -x + 15, heig1+15, fill = check, width = 2)
             canvas.create_oval(wid2 + x -15,heig1 - 15, wid2 +x +15, heig1+15, fill = colorbk, width = 2)
             canvas.create_text(wid2 - x, heig1, anchor= CENTER, text = str(puntos2_list[0]), font =(Font , 15))
-            canvas.create_text(wid2 + x, heig1, anchor = CENTER,text = 'No confesar', font =(Font , 15) )
+            canvas.create_text(wid2 + x, heig1, anchor = CENTER,text = str(puntos2_list2[0]), font =(Font , 15) )
             wid2 = wid2 - x
         else:
             canvas.create_line(wid2, heig +15, wid2 - x, heig1, width = 2)
@@ -247,7 +241,7 @@ def recursion(wid1,wid2, heig, x):
 
             canvas.create_oval(wid2 -x -15,heig1 - 15, wid2 -x + 15, heig1+15, fill = colorbk, width = 2)
             canvas.create_oval(wid2 + x -15,heig1 - 15, wid2 +x +15, heig1+15, fill = check, width = 2)
-            canvas.create_text(wid2 - x, heig1, anchor= CENTER, text = 'Confesar', font =(Font , 15))
+            canvas.create_text(wid2 - x, heig1, anchor= CENTER, text = str(puntos2_list2[0]), font =(Font , 15))
             canvas.create_text(wid2 + x, heig1, anchor = CENTER,text = str(puntos2_list[0]), font =(Font , 15) )
             wid2 = wid2 + x
             x = 0.95*x
@@ -255,6 +249,8 @@ def recursion(wid1,wid2, heig, x):
         del(var_list2[0])
         del(puntos2_list[0])
         del(puntos1_list[0])
+        del(puntos2_list2[0])
+        del(puntos1_list2[0])
         recursion(wid1, wid2, heig1, x)
 
 def close_window():
