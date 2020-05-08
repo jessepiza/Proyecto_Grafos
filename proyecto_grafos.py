@@ -12,6 +12,8 @@ root.title("El dilema del prisionero")
 canvas = Canvas(root, width = width, height = height)
 optionslist = ["Aleatorio", "Confesar", "No Confesar"]
 colorbk = '#28EEAF'
+player1 = StringVar()
+player2 = StringVar()
 puntos1 = 2
 puntos2 = 2
 var_list1 = []
@@ -125,7 +127,7 @@ def decision(number, i, player1, player2):
     h_tot = (i+1)*h/(number+h/150) + height/4
     canvas.create_text(3*width/16, h_tot , anchor = CENTER, text = 'Decisión\t ' + str(i+1) + ': ', font =(Font , size-2*number))
     options = OptionMenu(root, var, *optionslist)
-    options.config(font=(Font , size-4*number),bg='white', width=12)
+    options.config(font=(Font , size2 - number),bg='white', width=12)
     canvas.create_window(width/2, h_tot, window = options, width = width/4)
     if (i == 0):
         var.set(player1)
@@ -199,6 +201,7 @@ def recursion(wid1,wid2, heig, x):
     if n !=0:
         heig1 = heig + 45
         if (bool):
+            # Prisionero 1
             canvas.create_line(wid1, heig + 15, wid1 - x, heig1, width = 2)
             canvas.create_line(wid1, heig + 15, wid1 + x, heig1, width = 2)
             canvas.create_rectangle(wid1 - x/2 -10, (heig+15 + heig1)/2 - 10, wid1 -x/2 +10, (heig+15 + heig1)/2 + 10, fill = colorbk, outline = colorbk)
@@ -206,19 +209,22 @@ def recursion(wid1,wid2, heig, x):
             canvas.create_text((2*wid1 - x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = "Sí", font = (Font , 10, negrita))
             canvas.create_text((2*wid1 + x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = "No", font = (Font , 10, negrita))
             if var_list1[0] == optionslist[-2]:
-                canvas.create_oval(wid1 -x -15,heig1 - 15, wid1 -x + 15, heig1+15, fill = check, width = 2)
+                # Si la decisión Confiesa
+                canvas.create_rectangle(wid1 -x -15,heig1 - 15, wid1 -x + 15, heig1+15, fill = check, width = 2)
                 canvas.create_oval(wid1 + x -15,heig1 - 15, wid1 +x +15, heig1+15, fill = colorbk, width = 2)
                 canvas.create_text(wid1 - x, heig1, anchor = CENTER, text = str(puntos1_list[0]), font =(Font, 15))
                 canvas.create_text(wid1 + x, heig1, anchor = CENTER, text = str(puntos1_list2[0]), font =(Font , 15))
                 wid1 = wid1 - x
             else:
+                # Si la decisión Confiesa
                 canvas.create_oval(wid1 -x -15,heig1 - 15, wid1 -x + 15, heig1+15, fill = colorbk, width = 2)
-                canvas.create_oval(wid1 + x -15,heig1 - 15, wid1 +x +15, heig1+15, fill = check, width= 2)
+                canvas.create_rectangle(wid1 + x -15,heig1 - 15, wid1 +x +15, heig1+15, fill = check, width= 2)
                 canvas.create_text(wid1 - x, heig1, anchor = CENTER, text = str(puntos1_list2[0]), font =(Font , 15))
                 canvas.create_text(wid1 + x, heig1, anchor = CENTER, text = str(puntos1_list[0]), font =(Font , 15))
                 wid1 = wid1 + x
             bool = False
         if(bool == False):
+            # Prisionero 2
             canvas.create_line(wid2, heig + 15, wid2 - x, heig1, width = 2 )
             canvas.create_line(wid2, heig+ 15, wid2+ x, heig1, width = 2)
             canvas.create_rectangle(wid2 - x/2 -10, (heig+15 + heig1)/2 -10, wid2 -x/2 +10, (heig+15 + heig1)/2 + 10, fill = colorbk, outline = colorbk)
@@ -226,14 +232,16 @@ def recursion(wid1,wid2, heig, x):
             canvas.create_text((2*wid2 - x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = "Sí", font =(Font , 10, negrita))
             canvas.create_text((2*wid2 + x)/2, (heig+15 + heig1)/2,  anchor = CENTER, text = "No", font =(Font , 10, negrita))
             if var_list2[0] == optionslist[-2]:
-                canvas.create_oval(wid2 -x -15,heig1 - 15, wid2 -x + 15, heig1+15, fill = check, width = 2)
+                # Si la decisión es Confiesa
+                canvas.create_rectangle(wid2 -x -15,heig1 - 15, wid2 -x + 15, heig1+15, fill = check, width = 2)
                 canvas.create_oval(wid2 + x -15,heig1 - 15, wid2 +x +15, heig1+15, fill = colorbk, width = 2)
                 canvas.create_text(wid2 - x, heig1, anchor= CENTER, text = str(puntos2_list[0]), font =(Font , 15))
                 canvas.create_text(wid2 + x, heig1, anchor = CENTER,text = str(puntos2_list2[0]), font =(Font , 15) )
                 wid2 = wid2 - x
             else:
+                # Si la decisión es No Confiesa
                 canvas.create_oval(wid2 -x -15,heig1 - 15, wid2 -x + 15, heig1+15, fill = colorbk, width = 2)
-                canvas.create_oval(wid2 + x -15,heig1 - 15, wid2 +x +15, heig1+15, fill = check, width = 2)
+                canvas.create_rectangle(wid2 + x -15,heig1 - 15, wid2 +x +15, heig1+15, fill = check, width = 2)
                 canvas.create_text(wid2 - x, heig1, anchor= CENTER, text = str(puntos2_list2[0]), font =(Font , 15))
                 canvas.create_text(wid2 + x, heig1, anchor = CENTER,text = str(puntos2_list[0]), font =(Font , 15) )
                 wid2 = wid2 + x
@@ -252,10 +260,7 @@ def close_window():
     root.destroy()
 
 def inicio():
-    global var_list1
-    global var_list2
-    global puntos1
-    global puntos2
+    global var_list1, var_list2, puntos1, puntos2
     var_list1 = []
     var_list2 = []
     optionslist = ["Aleatorio", "Confesar", "No Confesar"]
