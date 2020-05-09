@@ -264,7 +264,7 @@ def close_window():
 def maximizar(number):
     list2 = []
     if (number == 1):
-        list = [(3,3), (1,7), (7,1), (2,2)]
+        list = [(puntos1 + 1, puntos1 + 1), (puntos1 - 1, puntos1 + 5), (puntos1 + 5, puntos1 - 1), (puntos1, puntos1)]
         return list
     else:
         list = maximizar(number - 1)
