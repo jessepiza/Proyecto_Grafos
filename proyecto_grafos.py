@@ -24,28 +24,32 @@ puntos2_list = []
 puntos2_list2 = []
 
 
+def aleatorio (player):
+    if (player == optionslist[0]):
+        bool = probability(0.5)
+        if (bool == False):
+            player = optionslist[-1]
+        else:
+            player = optionslist[-2]
+    return player
+
 def game(player1, player2, number):
     global var_list1
     global var_list2
     canvas.delete("all")
+    print("player1: ", player1)
+    print("player 2: ", player2)
     if (player1 == ''):
         player1 = optionslist[0]
     if (player2 == ''):
         player2 = optionslist[0]
 
     if (player1 == optionslist[0]):
-        bool = probability(0.5)
-        if (bool == False):
-            player1 = optionslist[-1]
-        else:
-            player1 = optionslist[-2]
-
+        player1 = aleatorio (player1)
     if (player2 == optionslist[0]):
-        bool = probability(0.5)
-        if (bool == False):
-            player2 = optionslist[-1]
-        else:
-            player2 = optionslist[-2]
+        player2 = aleatorio (player2)
+    print("player1: ", player1)
+    print("player 2: ", player2)
 
     var_list2.append(player2)
     var_list1.append(player1)
@@ -114,9 +118,10 @@ def puntuation(i, var, h_tot, number, player2, boton):
         puntos1_list2.append(puntos1 + 4)
         puntos2_list2.append(puntos2 + 4)
     elif (var == optionslist[1] and var_list2[i] == optionslist[1]):
+        puntos1 += 0
+        puntos2 += 0
         puntos1_list2.append(puntos1 - 1)
         puntos2_list2.append(puntos2 - 1)
-
     puntos2_list.append(puntos2)
     puntos1_list.append(puntos1)
     canvas.create_text(27*width/32, h_tot , anchor = CENTER, text = str(puntos1) + ' año(s)', font =(Font , size-2*number))
@@ -159,12 +164,10 @@ def resultados (number):
         canvas.create_text(21*width/32, h_tot , anchor = CENTER, text = var_list2[i], font =(Font , size-2*number))
         canvas.create_text(14*width/16, h_tot , anchor = CENTER, text = puntos2_list[i], font =(Font , size-2*number), fill = "#891C1C")
 
-def tree():
+def tree(wid1 = width/4, wid2 = 3*width/4):
     canvas.delete("all")
     canvas.configure(background = colorbk)  # se configura el color de la pantalla
     canvas.pack()
-    wid1 = width/4
-    wid2 = 3*wid1
     canvas.create_line(0, height/5, width, height/5)
     canvas.create_line(0, height/16, width, height/16)
     back = Button(root, text = "Inicio", width = int(width/100), command = lambda: inicio(), font = (Font, 20) )
@@ -176,16 +179,16 @@ def tree():
     if (len(var_list1) < 20):
         x = width/(4*len(var_list1) + 2)
         heig = height/(len(var_list1) + 2) + height/5
-        canvas.create_rectangle(wid1 - 50, heig -15,wid1 + 50, heig +15, fill = colorbk, width = 2)
+        canvas.create_rectangle(wid1 - 50, heig -10,wid1 + 50, heig +10, fill = colorbk, width = 2)
         canvas.create_text(wid1, heig, anchor = CENTER,text = 'Prisionero 1', fill = "black",font =(Font , 13,"bold"))
-        canvas.create_rectangle(wid2 - 50, heig -15,wid2 + 50, heig +15, fill = colorbk, width = 2)
+        canvas.create_rectangle(wid2 - 50, heig -10,wid2 + 50, heig +10, fill = colorbk, width = 2)
         canvas.create_text(wid2, heig, anchor = CENTER, text = 'Prisionero 2', font =(Font , 13, "bold"))
     else:
         x = width/(2.2*len(var_list1))
         heig = height/(len(var_list1) + 5) + height/5
-        canvas.create_rectangle(wid1 - 50, heig -15,wid1 + 50, heig +15, fill = colorbk, width = 2)
+        canvas.create_rectangle(wid1 - 50, heig -10,wid1 + 50, heig +10, fill = colorbk, width = 2)
         canvas.create_text(wid1, heig, anchor = CENTER,text = 'Prisionero 1', fill = "black",font =(Font , 13,"bold"))
-        canvas.create_rectangle(wid2 - 50, heig -15,wid2 + 50, heig +15, fill = colorbk, width = 2)
+        canvas.create_rectangle(wid2 - 50, heig -10,wid2 + 50, heig +10, fill = colorbk, width = 2)
         canvas.create_text(wid2, heig, anchor = CENTER, text = 'Prisionero 2', font =(Font , 13, "bold"))
 
     recursion(wid1, wid2, heig, x)
@@ -201,8 +204,8 @@ def recursion(wid1,wid2, heig, x):
         heig1 = heig + 45
         if (bool):
             # Prisionero 1
-            canvas.create_line(wid1, heig + 15, wid1 - x, heig1, width = 2)
-            canvas.create_line(wid1, heig + 15, wid1 + x, heig1, width = 2)
+            canvas.create_line(wid1, heig + 10, wid1 - x, heig1, width = 2)
+            canvas.create_line(wid1, heig + 10, wid1 + x, heig1, width = 2)
             canvas.create_oval(wid1 - x/2 -5, (heig+10 + heig1)/2 - 5, wid1 -x/2 +5, (heig+15 + heig1)/2 + 5, fill = colorbk, outline = colorbk)
             canvas.create_oval(wid1 + x/2 -5, (heig+10 + heig1)/2 - 5, wid1 + x/2 +5, (heig+15 + heig1)/2 + 5, fill = colorbk, outline = colorbk)
             canvas.create_text((2*wid1 - x)/2, (heig+10 + heig1)/2,  anchor = CENTER, text = "Sí", font = (Font , 10, negrita))
@@ -224,8 +227,8 @@ def recursion(wid1,wid2, heig, x):
             bool = False
         if(bool == False):
             # Prisionero 2
-            canvas.create_line(wid2, heig + 15, wid2 - x, heig1, width = 2 )
-            canvas.create_line(wid2, heig+ 15, wid2+ x, heig1, width = 2)
+            canvas.create_line(wid2, heig + 10, wid2 - x, heig1, width = 2 )
+            canvas.create_line(wid2, heig+ 10, wid2+ x, heig1, width = 2)
             canvas.create_oval(wid2 - x/2 -5, (heig+10 + heig1)/2 -5, wid2 -x/2 +5, (heig+15 + heig1)/2 + 5, fill = colorbk, outline = colorbk)
             canvas.create_oval(wid2 + x/2 -5, (heig+10 + heig1)/2 -5, wid2 + x/2 +5, (heig+15 + heig1)/2 + 5, fill = colorbk, outline = colorbk)
             canvas.create_text((2*wid2 - x)/2, (heig+10 + heig1)/2,  anchor = CENTER, text = "Sí", font =(Font , 10, negrita))
@@ -258,15 +261,31 @@ def recursion(wid1,wid2, heig, x):
 def close_window():
     root.destroy()
 
+def maximizar(number):
+    canvas.delete("all")
+
+def nash(number):
+    global var_list1, var_list2, puntos1_list, puntos2_list, puntos1_list2, puntos2_list2
+    for i in range (number):
+        var_list1.append(optionslist[-1])
+        var_list2.append(optionslist[-1])
+        puntos1_list.append(puntos1)
+        puntos2_list.append(puntos2)
+        puntos1_list2.append(puntos1 + 5)
+        puntos2_list2.append(puntos2 + 5)
+    resultados(number)
+
 def inicio():
-    global var_list1, var_list2, puntos1, puntos2
+    global var_list1, var_list2, puntos1, puntos2, puntos1_list, puntos2_list, puntos1_list2, puntos2_list2
     var_list1 = []
     var_list2 = []
     optionslist = ["Aleatorio", "Confesar", "No Confesar"]
     puntos1 = 2
     puntos2 = 2
-    puntos1_list = [2]
-    puntos2_list = [2]
+    puntos1_list = []
+    puntos2_list = []
+    puntos1_list2 = []
+    puntos2_list2 = []
 
     canvas.delete("all")
     player1 = StringVar()
@@ -295,8 +314,10 @@ def inicio():
 
     next = Button(root, text = "Siguiente", width = int(width/100), command = lambda: game(player1.get(), player2.get(), number.get()), font = (Font, 20))
     canvas.create_window(7*width/8, 7*height/8, window = next)
-
-
+    max = Button(root, text = "Maximizar", width = int(width/100), command = lambda: maximizar(2*number.get()), font = (Font, 20))
+    canvas.create_window(width/8, 7*height/8, window = max)
+    eqnash = Button(root, text = "Equilibrio de Nash", width = int(width/50), command = lambda: nash(number.get()), font = (Font, 20))
+    canvas.create_window(width/2, 7*height/8, window = eqnash)
 
 inicio()
 root.mainloop()
