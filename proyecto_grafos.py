@@ -262,7 +262,36 @@ def close_window():
     root.destroy()
 
 def maximizar(number):
+    list2 = []
+    if (number == 1):
+        list = [(3,3), (1,7), (7,1), (2,2)]
+        return list
+    else:
+        list = maximizar(number - 1)
+        for i in range (len(list)):
+            list2.append((list[i][0] + 1, list[i][1] + 1))
+        for i in range (len(list)):
+            list2.append((list[i][0] - 1, list[i][1] + 5))
+        for i in range (len(list)):
+            list2.append((list[i][0] + 5, list[i][1] - 1))
+        for i in range (len(list)):
+            list2.append(list[i])
+        return list2
+
+def decision_tree (number):
     canvas.delete("all")
+    back = Button(root, text = "Inicio", width = int(width/100), command = lambda: inicio(), font = (Font, 20) )
+    canvas.create_window(width/8, 17*height/128, window = back)
+    next = Button(root, text = "Cerrar", width = int(width/100), command = lambda: close_window(), font = (Font, 20))
+    canvas.create_window(6*width/8, 17*height/128, window = next)
+
+    canvas.create_text(width/2, height/8, anchor = CENTER, text = 'Árbol de decisión', font =(Font , size))
+    canvas.create_line(0, height/5, width, height/5)
+    canvas.create_line(0, height/16, width, height/16)
+
+    list = maximizar(number)
+
+
 
 def nash(number):
     global var_list1, var_list2, puntos1_list, puntos2_list, puntos1_list2, puntos2_list2
@@ -314,7 +343,7 @@ def inicio():
 
     next = Button(root, text = "Siguiente", width = int(width/100), command = lambda: game(player1.get(), player2.get(), number.get()), font = (Font, 20))
     canvas.create_window(7*width/8, 7*height/8, window = next)
-    max = Button(root, text = "Maximizar", width = int(width/100), command = lambda: maximizar(2*number.get()), font = (Font, 20))
+    max = Button(root, text = "Árbol de decisión", width = int(width/50), command = lambda: decision_tree(number.get()), font = (Font, 20))
     canvas.create_window(width/8, 7*height/8, window = max)
     eqnash = Button(root, text = "Equilibrio de Nash", width = int(width/50), command = lambda: nash(number.get()), font = (Font, 20))
     canvas.create_window(width/2, 7*height/8, window = eqnash)
