@@ -287,6 +287,7 @@ def decision_tree (number):
     canvas.create_line(0, height/16, width, height/16)
 
     list = maximizar(number)
+    print(list)
     if (number > 4):
         number = 3
     number = 2*number
@@ -301,10 +302,11 @@ def decision_tree (number):
         heig = height/(number + 5) + height/5
         canvas.create_text(wid1, heig, anchor = CENTER,text = 'P1', fill = "black",font =(Font , 13,"bold"))
     number -= 1
-    dib_arb(wid1, heig, 'P1', number, x)
+    dib_arb( wid1, heig, 'P1', number, x, list)
 
 
-def dib_arb(wid1,heig, pri, number, x):
+def dib_arb(wid1,heig, pri, number, x, list):
+    print("number: ", number)
     heig1= heig + 45
     if (number != 0):
         if (pri == 'P1'):
@@ -319,13 +321,17 @@ def dib_arb(wid1,heig, pri, number, x):
             canvas.create_text(wid1 - x, heig1, anchor = CENTER, text = 'P1', fill = 'black', font =(Font, 13, "bold"))
             canvas.create_text(wid1 + x, heig1,anchor = CENTER, text = 'P1', fill = 'black', font =(Font, 13, "bold"))
             pri = 'P1'
-
+        if (number == 1):
+            canvas.create_text(wid1 - x, heig1 + 45, anchor = CENTER, text = str(list[0][0]) + ", " + str(list[0][1]), fill = 'black', font =(Font, 13, "bold"), angle = 90)
+            del(list[0])
+            canvas.create_text(wid1 + x, heig1 + 45, anchor = CENTER, text = str(list[0][0]) + ", " + str(list[0][1]), fill = 'black', font =(Font, 13, "bold"), angle = 90)
+            del(list[0])
         wid2 = wid1 - x
         wid3 =wid1 + x
         x = 0.45*x
         number-=1
-        dib_arb(wid2, heig1,pri, number, x)
-        dib_arb(wid3,heig1, pri, number, x)
+        dib_arb( wid2, heig1,pri, number, x, list)
+        dib_arb( wid3,heig1, pri, number, x, list)
 
 def nash(number):
     global var_list1, var_list2, puntos1_list, puntos2_list, puntos1_list2, puntos2_list2
