@@ -37,8 +37,6 @@ def game(player1, player2, number):
     global var_list1
     global var_list2
     canvas.delete("all")
-    print("player1: ", player1)
-    print("player 2: ", player2)
     if (player1 == ''):
         player1 = optionslist[0]
     if (player2 == ''):
@@ -48,8 +46,6 @@ def game(player1, player2, number):
         player1 = aleatorio (player1)
     if (player2 == optionslist[0]):
         player2 = aleatorio (player2)
-    print("player1: ", player1)
-    print("player 2: ", player2)
 
     var_list2.append(player2)
     var_list1.append(player1)
@@ -163,44 +159,7 @@ def resultados (number):
         canvas.create_text(6*width/16, h_tot , anchor = CENTER, text = puntos1_list[i], font =(Font , size-2*number), fill = "#891C1C")
         canvas.create_text(21*width/32, h_tot , anchor = CENTER, text = var_list2[i], font =(Font , size-2*number))
         canvas.create_text(14*width/16, h_tot , anchor = CENTER, text = puntos2_list[i], font =(Font , size-2*number), fill = "#891C1C")
-def maximizar(number):
-    canvas.delete("all")
-    canvas.configure(background = colorbk)
-    canvas.pack()
-    wid1 = width/2
-    if (number < 20):
-        x = width/(3*number)
-        heig = height/(number + 2) + height/5
-        canvas.create_text(wid1, heig, anchor = CENTER,text = 'P1', fill = "black",font =(Font , 13,"bold"))
 
-    else:
-        x = width/(2.2*number)
-        heig = height/(number + 5) + height/5
-        canvas.create_text(wid1, heig, anchor = CENTER,text = 'P1', fill = "black",font =(Font , 13,"bold"))
-    number -= 1
-    dib_arb(wid1, heig, 'P1', number, x)
-
-def dib_arb(wid1,heig, pri, number, x):
-    heig1= heig + 45
-    if (number != 0):
-        if (pri == 'P1'):
-            canvas.create_line(wid1, heig + 15, wid1 - x, heig1, width = 2)
-            canvas.create_line(wid1, heig + 15, wid1 + x, heig1, width = 2)
-            canvas.create_text(wid1 - x, heig1, anchor = CENTER, text = 'P2', fill = 'black', font =(Font, 13, "bold"))
-            canvas.create_text(wid1 + x, heig1, anchor = CENTER, text = 'P2', fill = 'black', font =(Font, 13, "bold"))
-            pri = 'P2'
-        else:
-            canvas.create_line(wid1, heig + 15, wid1 - x, heig1, width = 2)
-            canvas.create_line(wid1, heig + 15, wid1 + x, heig1, width = 2)
-            canvas.create_text(wid1 - x, heig1, anchor = CENTER, text = 'P1', fill = 'black', font =(Font, 13, "bold"))
-            canvas.create_text(wid1 + x, heig1,anchor = CENTER, text = 'P1', fill = 'black', font =(Font, 13, "bold"))
-            pri = 'P1'
-        wid2 = wid1 - x
-        wid3 =wid1 + x
-        x = 0.8*x
-        number-=1
-        dib_arb(wid2, heig1,pri, number, x)
-        dib_arb(wid3,heig1, pri, number, x)
 
 def tree(wid1 = width/4, wid2 = 3*width/4):
     canvas.delete("all")
@@ -328,6 +287,43 @@ def decision_tree (number):
     canvas.create_line(0, height/16, width, height/16)
 
     list = maximizar(number)
+
+    number = 2*number
+    wid1 = width/2
+    if (number < 20):
+        x = width/(3*number)
+        heig = height/(number + 2) + height/5
+        canvas.create_text(wid1, heig, anchor = CENTER,text = 'P1', fill = "black",font =(Font , 13,"bold"))
+
+    else:
+        x = width/(2.2*number)
+        heig = height/(number + 5) + height/5
+        canvas.create_text(wid1, heig, anchor = CENTER,text = 'P1', fill = "black",font =(Font , 13,"bold"))
+    number -= 1
+    dib_arb(wid1, heig, 'P1', number, x)
+
+
+def dib_arb(wid1,heig, pri, number, x):
+    heig1= heig + 45
+    if (number != 0):
+        if (pri == 'P1'):
+            canvas.create_line(wid1, heig + 15, wid1 - x, heig1, width = 2)
+            canvas.create_line(wid1, heig + 15, wid1 + x, heig1, width = 2)
+            canvas.create_text(wid1 - x, heig1, anchor = CENTER, text = 'P2', fill = 'black', font =(Font, 13, "bold"))
+            canvas.create_text(wid1 + x , heig1, anchor = CENTER, text = 'P2', fill = 'black', font =(Font, 13, "bold"))
+            pri = 'P2'
+        else:
+            canvas.create_line(wid1, heig + 15, wid1 - x, heig1, width = 2)
+            canvas.create_line(wid1, heig + 15, wid1 + x, heig1, width = 2)
+            canvas.create_text(wid1 - x, heig1, anchor = CENTER, text = 'P1', fill = 'black', font =(Font, 13, "bold"))
+            canvas.create_text(wid1 + x, heig1,anchor = CENTER, text = 'P1', fill = 'black', font =(Font, 13, "bold"))
+            pri = 'P1'
+        wid2 = wid1 - x
+        wid3 =wid1 + x
+        x = 0.8*x
+        number-=1
+        dib_arb(wid2, heig1,pri, number, x)
+        dib_arb(wid3,heig1, pri, number, x)
 
 
 
