@@ -287,16 +287,17 @@ def decision_tree (number):
     canvas.create_line(0, height/16, width, height/16)
 
     list = maximizar(number)
-
+    if (number > 4):
+        number = 3
     number = 2*number
     wid1 = width/2
     if (number < 20):
-        x = width/(3*number)
+        x = width/3.7
         heig = height/(number + 2) + height/5
         canvas.create_text(wid1, heig, anchor = CENTER,text = 'P1', fill = "black",font =(Font , 13,"bold"))
 
     else:
-        x = width/(2.2*number)
+        x = width/(2*number)
         heig = height/(number + 5) + height/5
         canvas.create_text(wid1, heig, anchor = CENTER,text = 'P1', fill = "black",font =(Font , 13,"bold"))
     number -= 1
@@ -307,25 +308,24 @@ def dib_arb(wid1,heig, pri, number, x):
     heig1= heig + 45
     if (number != 0):
         if (pri == 'P1'):
-            canvas.create_line(wid1, heig + 15, wid1 - x, heig1, width = 2)
-            canvas.create_line(wid1, heig + 15, wid1 + x, heig1, width = 2)
+            canvas.create_line(wid1, heig + 15, wid1 - x, heig1-8, width = 2)
+            canvas.create_line(wid1, heig + 15, wid1 + x, heig1-8, width = 2)
             canvas.create_text(wid1 - x, heig1, anchor = CENTER, text = 'P2', fill = 'black', font =(Font, 13, "bold"))
             canvas.create_text(wid1 + x , heig1, anchor = CENTER, text = 'P2', fill = 'black', font =(Font, 13, "bold"))
             pri = 'P2'
         else:
-            canvas.create_line(wid1, heig + 15, wid1 - x, heig1, width = 2)
-            canvas.create_line(wid1, heig + 15, wid1 + x, heig1, width = 2)
+            canvas.create_line(wid1, heig + 15, wid1 - x, heig1-8, width = 2)
+            canvas.create_line(wid1, heig + 15, wid1 + x, heig1-8, width = 2)
             canvas.create_text(wid1 - x, heig1, anchor = CENTER, text = 'P1', fill = 'black', font =(Font, 13, "bold"))
             canvas.create_text(wid1 + x, heig1,anchor = CENTER, text = 'P1', fill = 'black', font =(Font, 13, "bold"))
             pri = 'P1'
+
         wid2 = wid1 - x
         wid3 =wid1 + x
-        x = 0.8*x
+        x = 0.45*x
         number-=1
         dib_arb(wid2, heig1,pri, number, x)
         dib_arb(wid3,heig1, pri, number, x)
-
-
 
 def nash(number):
     global var_list1, var_list2, puntos1_list, puntos2_list, puntos1_list2, puntos2_list2
