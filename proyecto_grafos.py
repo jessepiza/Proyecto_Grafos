@@ -287,9 +287,7 @@ def decision_tree (number):
     canvas.create_line(0, height/16, width, height/16)
 
     list = maximizar(number)
-    print(list)
-    if (number > 4):
-        number = 3
+    number_ant = number
     number = 2*number
     wid1 = width/2
     if (number < 20):
@@ -302,11 +300,10 @@ def decision_tree (number):
         heig = height/(number + 5) + height/5
         canvas.create_text(wid1, heig, anchor = CENTER,text = 'P1', fill = "black",font =(Font , 13,"bold"))
     number -= 1
-    dib_arb( wid1, heig, 'P1', number, x, list)
+    dib_arb( wid1, heig, 'P1', number_ant, number, x, list)
 
 
-def dib_arb(wid1,heig, pri, number, x, list):
-    print("number: ", number)
+def dib_arb(wid1,heig, pri, number_ant, number, x, list):
     heig1= heig + 45
     if (number != 0):
         if (pri == 'P1'):
@@ -321,17 +318,19 @@ def dib_arb(wid1,heig, pri, number, x, list):
             canvas.create_text(wid1 - x, heig1, anchor = CENTER, text = 'P1', fill = 'black', font =(Font, 13, "bold"))
             canvas.create_text(wid1 + x, heig1,anchor = CENTER, text = 'P1', fill = 'black', font =(Font, 13, "bold"))
             pri = 'P1'
-        if (number == 1):
-            canvas.create_text(wid1 - x, heig1 + 45, anchor = CENTER, text = str(list[0][0]) + ", " + str(list[0][1]), fill = 'black', font =(Font, 13, "bold"), angle = 90)
-            del(list[0])
-            canvas.create_text(wid1 + x, heig1 + 45, anchor = CENTER, text = str(list[0][0]) + ", " + str(list[0][1]), fill = 'black', font =(Font, 13, "bold"), angle = 90)
-            del(list[0])
         wid2 = wid1 - x
         wid3 =wid1 + x
         x = 0.45*x
         number-=1
-        dib_arb( wid2, heig1,pri, number, x, list)
-        dib_arb( wid3,heig1, pri, number, x, list)
+        dib_arb( wid2, heig1,pri, number_ant, number, x, list)
+        dib_arb( wid3,heig1, pri, number_ant, number, x, list)
+    else:
+        canvas.create_line(wid1, heig + 15, wid1 - x, heig1-8, width = 2)
+        canvas.create_line(wid1, heig + 15, wid1 + x, heig1-8, width = 2)
+        canvas.create_text(wid1 - x, heig1 + 15, anchor = CENTER, text = str(list[0][0]) + ", " + str(list[0][1]), fill = 'black', font =(Font, int(size2/number_ant), "bold"), angle = 90)
+        del(list[0])
+        canvas.create_text(wid1 + x, heig1 + 15, anchor = CENTER, text = str(list[0][0]) + ", " + str(list[0][1]), fill = 'black', font =(Font, int(size2/number_ant), "bold"), angle = 90)
+        del(list[0])
 
 def nash(number):
     global var_list1, var_list2, puntos1_list, puntos2_list, puntos1_list2, puntos2_list2
