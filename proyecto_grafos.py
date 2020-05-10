@@ -325,8 +325,8 @@ def dib_arb(wid1,heig, pri, number_ant, number, x, list):
         dib_arb( wid2, heig1,pri, number_ant, number, x, list)
         dib_arb( wid3,heig1, pri, number_ant, number, x, list)
     else:
-        canvas.create_line(wid1, heig + 15, wid1 - x, heig1-8, width = 2)
-        canvas.create_line(wid1, heig + 15, wid1 + x, heig1-8, width = 2)
+        canvas.create_line(wid1, heig + int(10/number_ant), wid1 - x, heig1-8, width = 2)
+        canvas.create_line(wid1, heig + int(10/number_ant), wid1 + x, heig1-8, width = 2)
         canvas.create_text(wid1 - x, heig1 + 15, anchor = CENTER, text = str(list[0][0]) + ", " + str(list[0][1]), fill = 'black', font =(Font, int(size2/number_ant), "bold"), angle = 90)
         del(list[0])
         canvas.create_text(wid1 + x, heig1 + 15, anchor = CENTER, text = str(list[0][0]) + ", " + str(list[0][1]), fill = 'black', font =(Font, int(size2/number_ant), "bold"), angle = 90)
